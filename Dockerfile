@@ -39,7 +39,7 @@ COPY --from=builder /usr/local/bin/ /usr/local/bin/
 WORKDIR /app
 
 # Copy application code
-COPY --chown=appuser:appuser ./www /app
+COPY --chown=appuser:appuser ./mysite /app
 
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -53,4 +53,4 @@ EXPOSE 8000
 
 # Start the application using Gunicorn
 # Add "--workers", "3" or whatever to spawn more processes to process requests.
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "www.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "mysite.wsgi:application"]
