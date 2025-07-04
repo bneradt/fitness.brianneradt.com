@@ -8,17 +8,20 @@
       Workout Session Detail
     </div>
     <div class="card-body">
-      <h5 class="card-title">Date: {{ session.date }}</h5>
-      <p class="card-text">Pullup Type: {{ session.get_pullup_type_display }}</p>
-      <p class="card-text">Pullup Count (Set 1): {{ session.pullup_count1 }}</p>
-      <p class="card-text">Pushup Count (Set 1): {{ session.pushup_count1 }}</p>
-      <p class="card-text">Pullup Count (Set 2): {{ session.pullup_count2 }}</p>
-      <p class="card-text">Pushup Count (Set 2): {{ session.pushup_count2 }}</p>
-      <p class="card-text">Pullup Count (Set 3): {{ session.pullup_count3 }}</p>
-      <p class="card-text">Pushup Count (Set 3): {{ session.pushup_count3 }}</p>
-      <hr>
-      <p class="card-text"><strong>Total Pullups:</strong> {{ session.total_pullups }}</p>
-      <p class="card-text"><strong>Total Pushups:</strong> {{ session.total_pushups }}</p>
+      <table class="table table-bordered">
+        <tbody>
+          <tr class="table-primary"><th scope="row">Date</th><td>{{ session.date }}</td></tr>
+          <tr class="table-info"><th scope="row">Pullup Type</th><td>{{ session.get_pullup_type_display }}</td></tr>
+          <tr><th scope="row">Pullup Count (Set 1)</th><td>{{ session.pullup_count1 }}</td></tr>
+          <tr><th scope="row">Pushup Count (Set 1)</th><td>{{ session.pushup_count1 }}</td></tr>
+          <tr><th scope="row">Pullup Count (Set 2)</th><td>{{ session.pullup_count2 }}</td></tr>
+          <tr><th scope="row">Pushup Count (Set 2)</th><td>{{ session.pushup_count2 }}</td></tr>
+          <tr><th scope="row">Pullup Count (Set 3)</th><td>{{ session.pullup_count3 }}</td></tr>
+          <tr><th scope="row">Pushup Count (Set 3)</th><td>{{ session.pushup_count3 }}</td></tr>
+          <tr class="table-secondary"><th scope="row">Total Pullups</th><td>{{ session.total_pullups }}</td></tr>
+          <tr class="table-secondary"><th scope="row">Total Pushups</th><td>{{ session.total_pushups }}</td></tr>
+        </tbody>
+      </table>
       <a href="{% url 'workoutlog:edit_workout_session' session.pk %}" class="btn btn-warning">Edit</a>
       <a href="{% url 'workoutlog:delete_workout_session' session.pk %}" class="btn btn-danger">Delete</a>
       <a href="{% url 'workoutlog:view_workout_sessions' %}" class="btn btn-secondary">Back to list</a>

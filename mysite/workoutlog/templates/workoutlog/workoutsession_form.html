@@ -9,10 +9,10 @@
         {% csrf_token %}
         {{ form.non_field_errors }}
         {{ form.errors }}
-        <div class="mb-3">
-            {{ form.as_p }}
-        </div>
-        <button type="submit" class="btn btn-success">Save</button>
+        <table class="table">
+            {{ form.as_table }}
+        </table>
+        <button type="submit" class="btn btn-success mt-2">Save</button>
         <a href="{% url 'workoutlog:view_workout_sessions' %}" class="btn btn-secondary mt-2">Back to sessions</a>
     </form>
 {% endblock %}
