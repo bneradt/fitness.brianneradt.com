@@ -17,26 +17,24 @@ class WorkoutSession(models.Model):
         default=PullupType.PULLUPS,
     )
 
+    pullup_count1 = models.PositiveIntegerField(default=0)
+    pushup_count1 = models.PositiveIntegerField(default=0)
+
+    pullup_count2 = models.PositiveIntegerField(default=0)
+    pushup_count2 = models.PositiveIntegerField(default=0)
+
+    pullup_count3 = models.PositiveIntegerField(default=0)
+    pushup_count3 = models.PositiveIntegerField(default=0)
+
     class Meta:
         unique_together = ('user', 'date')
         ordering = ['-date']
 
     def __str__(self):
-        return f"{self.user.username} - {self.date}"
-
-class WorkoutSet(models.Model):
-    session = models.ForeignKey(WorkoutSession, on_delete=models.CASCADE, related_name='sets')
-    set_number = models.PositiveSmallIntegerField(
-        choices=[(1, 'Set 1'), (2, 'Set 2'), (3, 'Set 3')]
-    )
-    pullup_count = models.PositiveIntegerField(default=0)
-    pushup_count = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        unique_together = ('session', 'set_number')
-        ordering = ['session', 'set_number']
-
-    def __str__(self):
-        user = self.session.user.username
-        date = self.session.date
-        return f"{user} - {date} - Set {self.set_number}"
+        total_pullups = (self.pullup_count1 +
+                         self.pullup_count2 +
+                         self.pullup_count3)
+        total_pushups = (self.pushup_count1 +
+                         self.pushup_count2 +
+                         self.pushup_count3)
+        return f"{self.user.username} - {self.date}: {total_pullups} Pullups, {total_pushups} Pushups"
