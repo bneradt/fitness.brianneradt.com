@@ -52,26 +52,24 @@ ENV PYTHONUNBUFFERED=1
 # Switch to non-root user
 USER appuser
 
-# Add the superuser account.
 RUN <<EOS
    set -e
 
-   cd mysite
-   DJANGO_SUPERUSER_PASSWORD=$(cat /run/secrets/django_fitness_admin_password) \
-   DJANGO_SUPERUSER_USERNAME=$(cat /run/secrets/django_fitness_admin_username) \
-   DJANGO_SUPERUSER_EMAIL=$(cat /run/secrets/django_fitness_admin_email) \
-      python manage.py createsuperuser --noinput || true
+   python manage.py migrate --noinput
+   python manage.py collectstatic --noinput
 EOS
+
+# Add the superuser account.
+RUN --mount=type=secret,id=django_fitness_admin_password,mode=0444 \
+    --mount=type=secret,id=django_fitness_admin_username,mode=0444 \
+    --mount=type=secret,id=django_fitness_admin_email,mode=0444 \
+    DJANGO_SUPERUSER_PASSWORD=$(cat /run/secrets/django_fitness_admin_password) \
+    DJANGO_SUPERUSER_USERNAME=$(cat /run/secrets/django_fitness_admin_username) \
+    DJANGO_SUPERUSER_EMAIL=$(cat /run/secrets/django_fitness_admin_email) \
+    python manage.py createsuperuser --noinput
 
 # Expose the application port
 EXPOSE 80
-
-# Run migrations and create superuser (noinput, ignore errors if it already exists)
-RUN <<EOS
-   set -e
-   python manage.py migrate --noinput
-   python manage.py createsuperuser --noinput || true
-EOS
 
 # Start the application using Gunicorn
 # Add "--workers", "3" or whatever to spawn more processes to process requests.
