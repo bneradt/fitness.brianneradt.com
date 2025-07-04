@@ -27,9 +27,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Stage 2: Production stage
 FROM python:3.13-slim
 
-RUN useradd -m -r appuser && \
-   mkdir /app && \
+RUN <<EOS
+   set -e
+
+   useradd -m -r appuser
+   mkdir /app
    chown -R appuser /app
+EOS
 
 # Copy the Python dependencies from the builder stage
 COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
@@ -38,7 +42,7 @@ COPY --from=builder /usr/local/bin/ /usr/local/bin/
 # Set the working directory
 WORKDIR /app
 
-# Copy application code
+# Copy django application code itself.
 COPY --chown=appuser:appuser ./mysite /app
 
 # Set environment variables to optimize Python
@@ -48,8 +52,26 @@ ENV PYTHONUNBUFFERED=1
 # Switch to non-root user
 USER appuser
 
+# Add the superuser account.
+RUN <<EOS
+   set -e
+
+   cd mysite
+   DJANGO_SUPERUSER_PASSWORD=$(cat /run/secrets/django_fitness_admin_password) \
+   DJANGO_SUPERUSER_USERNAME=$(cat /run/secrets/django_fitness_admin_username) \
+   DJANGO_SUPERUSER_EMAIL=$(cat /run/secrets/django_fitness_admin_email) \
+      python manage.py createsuperuser --noinput || true
+EOS
+
 # Expose the application port
-EXPOSE 8000
+EXPOSE 80
+
+# Run migrations and create superuser (noinput, ignore errors if it already exists)
+RUN <<EOS
+   set -e
+   python manage.py migrate --noinput
+   python manage.py createsuperuser --noinput || true
+EOS
 
 # Start the application using Gunicorn
 # Add "--workers", "3" or whatever to spawn more processes to process requests.
