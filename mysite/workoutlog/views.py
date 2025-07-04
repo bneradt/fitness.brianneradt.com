@@ -41,6 +41,7 @@ class WorkoutSessionUpdateView(LoginRequiredMixin, UpdateView):
 
 class WorkoutSessionDeleteView(LoginRequiredMixin, DeleteView):
     model = WorkoutSession
+    context_object_name = 'session'
     template_name = 'workoutlog/workoutsession_confirm_delete.html'
     success_url = reverse_lazy('workoutlog:view_workout_sessions')
 
