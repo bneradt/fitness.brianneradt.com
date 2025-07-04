@@ -2,9 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Workout Session Detail</title>
+    <title>{% block title %}Workout Session Detail{% endblock %}</title>
 </head>
 <body>
+    {% block content %}
     <h1>Delete Workout Session</h1>
     <p>Are you sure you want to delete the workout session for {{ session.date }}?</p>
 
@@ -23,5 +24,6 @@
     </form>
 
     <p><a href="{% url 'workoutlog:view_workout_sessions' %}">Cancel</a></p>
+    {% endblock %}
 </body>
 </html>

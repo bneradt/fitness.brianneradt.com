@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>{% if form.instance.pk %}Edit{% else %}New{% endif %} Workout Session</title>
-</head>
-<body>
+{% extends 'workoutlog/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Edit{% else %}New{% endif %} Workout Session{% endblock %}
+
+{% block content %}
     <h1>{% if form.instance.pk %}Edit{% else %}New{% endif %} Workout Session</h1>
 
     <form method="post">
         {% csrf_token %}
         {{ form.non_field_errors }}
         {{ form.errors }}
-        {{ form }}
+        {{ form.as_table }}
 
         <button type="submit">Save</button>
     </form>
 
     <p><a href="{% url 'workoutlog:view_workout_sessions' %}">Back to sessions</a></p>
-</body>
-</html>
+{% endblock %}

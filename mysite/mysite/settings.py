@@ -117,6 +117,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Redirect after login/logout
+LOGIN_REDIRECT_URL = '/view_sessions/'
+LOGOUT_REDIRECT_URL = '/view_sessions/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

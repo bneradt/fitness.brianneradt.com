@@ -2,9 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Workout Sessions</title>
+    <title>{% block title %}Workout Sessions{% endblock %}</title>
 </head>
 <body>
+    {% block content %}
     <h1>Workout Sessions</h1>
     <p><a href="{% url 'workoutlog:new_workout_session' %}">Add New Session</a></p>
 
@@ -38,5 +39,6 @@
             {% endfor %}
         </tbody>
     </table>
+    {% endblock %}
 </body>
 </html>
