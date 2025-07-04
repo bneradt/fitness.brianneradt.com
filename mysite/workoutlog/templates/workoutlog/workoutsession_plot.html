@@ -1,0 +1,78 @@
+{% extends 'workoutlog/base.html' %}
+
+{% block title %}Workout Sessions Plot{% endblock %}
+
+{% block content %}
+  <h1>Workout Sessions Over Time</h1>
+  <canvas id="workoutChart" width="800" height="400"></canvas>
+  <a href="{% url 'workoutlog:view_workout_sessions' %}" class="btn btn-secondary mt-3">Back to sessions</a>
+{% endblock %}
+
+{% block extra_scripts %}
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const labels = JSON.parse('{{ labels_json|escapejs }}');
+    const pullupsData = JSON.parse('{{ pullups_json|escapejs }}');
+    const chinupsData = JSON.parse('{{ chinups_json|escapejs }}');
+    const neutralData = JSON.parse('{{ neutral_json|escapejs }}');
+    const pushupsData = JSON.parse('{{ pushups_json|escapejs }}');
+
+    const ctx = document.getElementById('workoutChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Pullups',
+            data: pullupsData,
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            fill: false
+          },
+          {
+            label: 'Chinups',
+            data: chinupsData,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            fill: false
+          },
+          {
+            label: 'Neutral Pullups',
+            data: neutralData,
+            borderColor: 'rgba(255, 206, 86, 1)',
+            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+            fill: false
+          },
+          {
+            label: 'Pushups',
+            data: pushupsData,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        stacked: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Workout Totals by Session'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+{% endblock %}

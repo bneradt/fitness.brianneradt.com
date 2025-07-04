@@ -1,8 +1,9 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .models import WorkoutSession
+from .models import WorkoutSession, PullupType
 from .forms import WorkoutSessionForm
+import json
 
 class WorkoutSessionListView(LoginRequiredMixin, ListView):
     model = WorkoutSession
@@ -47,3 +48,21 @@ class WorkoutSessionDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return WorkoutSession.objects.filter(user=self.request.user)
+
+class WorkoutSessionPlotView(LoginRequiredMixin, TemplateView):
+    template_name = 'workoutlog/workoutsession_plot.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sessions = WorkoutSession.objects.filter(user=self.request.user).order_by('date')
+        labels = [session.date.strftime('%Y-%m-%d') for session in sessions]
+        pullups = [session.total_pullups if session.pullup_type == PullupType.PULLUPS else 0 for session in sessions]
+        chinups = [session.total_pullups if session.pullup_type == PullupType.CHINUPS else 0 for session in sessions]
+        neutral = [session.total_pullups if session.pullup_type == PullupType.NEUTRAL else 0 for session in sessions]
+        pushups = [session.total_pushups for session in sessions]
+        context['labels_json'] = json.dumps(labels)
+        context['pullups_json'] = json.dumps(pullups)
+        context['chinups_json'] = json.dumps(chinups)
+        context['neutral_json'] = json.dumps(neutral)
+        context['pushups_json'] = json.dumps(pushups)
+        return context

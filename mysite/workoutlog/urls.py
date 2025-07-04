@@ -5,6 +5,7 @@ from .views import (
     WorkoutSessionCreateView,
     WorkoutSessionUpdateView,
     WorkoutSessionDeleteView,
+    WorkoutSessionPlotView,
 )
 
 app_name = 'workoutlog'
@@ -20,4 +21,5 @@ urlpatterns = [
     path('edit_session/<int:pk>/', WorkoutSessionUpdateView.as_view(), name='edit_workout_session'),
     # Delete a session
     path('delete_session/<int:pk>/', WorkoutSessionDeleteView.as_view(), name='delete_workout_session'),
+    path('plot/', WorkoutSessionPlotView.as_view(), name='plot_workout_sessions'),
 ]

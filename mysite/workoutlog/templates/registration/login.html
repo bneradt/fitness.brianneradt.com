@@ -1,0 +1,18 @@
+{% extends 'workoutlog/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <h1>Login</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <table class="table">
+      {{ form.as_table }}
+    </table>
+    {% if next %}
+      <input type="hidden" name="next" value="{{ next }}">
+    {% endif %}
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+{% endblock %}
