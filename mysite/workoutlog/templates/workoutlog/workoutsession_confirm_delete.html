@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Workout Session Detail</title>
+</head>
+<body>
+    <h1>Delete Workout Session</h1>
+    <p>Are you sure you want to delete the workout session for {{ session.date }}?</p>
+
+    <p>Pullup Type: {{ session.get_pullup_type_display }}</p>
+    <p>Pullup Count (Set 1): {{ session.pullup_count1 }}</p>
+    <p>Pushup Count (Set 1): {{ session.pushup_count1 }}</p>
+    <p>Pullup Count (Set 2): {{ session.pullup_count2 }}</p>
+    <p>Pushup Count (Set 2): {{ session.pushup_count2 }}</p>
+    <p>Pullup Count (Set 3): {{ session.pullup_count3 }}</p>
+    <p>Pushup Count (Set 3): {{ session.pushup_count3 }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm Delete</button>
+    </form>
+
+    <p><a href="{% url 'workoutlog:view_workout_sessions' %}">Cancel</a></p>
+</body>
+</html>

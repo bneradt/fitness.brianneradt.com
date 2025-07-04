@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Workout Sessions</title>
+</head>
+<body>
+    <h1>Workout Sessions</h1>
+    <p><a href="{% url 'workoutlog:new_workout_session' %}">Add New Session</a></p>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Pullup Type</th>
+                <th>Pullup Count</th>
+                <th>Pushup Count</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+            <tr>
+                <td>{{ session.date }}</td>
+                <td>{{ session.get_pullup_type_display }}</td>
+                <td>{{ session.pullup_count }}</td>
+                <td>{{ session.pushup_count }}</td>
+                <td>
+                    <a href="{% url 'workoutlog:workout_session_detail' session.pk %}">View</a> |
+                    <a href="{% url 'workoutlog:edit_workout_session' session.pk %}">Edit</a> |
+                    <a href="{% url 'workoutlog:delete_workout_session' session.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No sessions available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

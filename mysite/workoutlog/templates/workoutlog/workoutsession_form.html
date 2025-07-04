@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% if form.instance.pk %}Edit{% else %}New{% endif %} Workout Session</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Edit{% else %}New{% endif %} Workout Session</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <table>
+            <tr>
+                <th>{{ form.date.label_tag }}</th>
+                <td>{{ form.date }}</td>
+            </tr>
+            <tr>
+                <th>{{ form.pullup_type.label_tag }}</th>
+                <td>{{ form.pullup_type }}</td>
+            </tr>
+            <tr><th colspan="2">Set 1</th></tr>
+            <tr>
+                <th>{{ form.pullup_count1.label_tag }}</th>
+                <td>{{ form.pullup_count1 }}</td>
+            </tr>
+            <tr>
+                <th>{{ form.pushup_count1.label_tag }}</th>
+                <td>{{ form.pushup_count1 }}</td>
+            </tr>
+            <tr><th colspan="2">Set 2</th></tr>
+            <tr>
+                <th>{{ form.pullup_count2.label_tag }}</th>
+                <td>{{ form.pullup_count2 }}</td>
+            </tr>
+            <tr>
+                <th>{{ form.pushup_count2.label_tag }}</th>
+                <td>{{ form.pushup_count2 }}</td>
+            </tr>
+            <tr><th colspan="2">Set 3</th></tr>
+            <tr>
+                <th>{{ form.pullup_count3.label_tag }}</th>
+                <td>{{ form.pullup_count3 }}</td>
+            </tr>
+            <tr>
+                <th>{{ form.pushup_count3.label_tag }}</th>
+                <td>{{ form.pushup_count3 }}</td>
+            </tr>
+        </table>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <p><a href="{% url 'workoutlog:view_workout_sessions' %}">Back to sessions</a></p>
+</body>
+</html>
