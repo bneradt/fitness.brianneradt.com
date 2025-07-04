@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from .models import WorkoutSession
 from .forms import WorkoutSessionForm
 
@@ -23,7 +24,7 @@ class WorkoutSessionCreateView(LoginRequiredMixin, CreateView):
     model = WorkoutSession
     form_class = WorkoutSessionForm
     template_name = 'workoutlog/workoutsession_form.html'
-    success_url = '/workoutlog/view_sessions/'
+    success_url = reverse_lazy('workoutlog:view_workout_sessions')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -33,7 +34,7 @@ class WorkoutSessionUpdateView(LoginRequiredMixin, UpdateView):
     model = WorkoutSession
     form_class = WorkoutSessionForm
     template_name = 'workoutlog/workoutsession_form.html'
-    success_url = '/workoutlog/view_sessions/'
+    success_url = reverse_lazy('workoutlog:view_workout_sessions')
 
     def get_queryset(self):
         return WorkoutSession.objects.filter(user=self.request.user)
@@ -41,7 +42,7 @@ class WorkoutSessionUpdateView(LoginRequiredMixin, UpdateView):
 class WorkoutSessionDeleteView(LoginRequiredMixin, DeleteView):
     model = WorkoutSession
     template_name = 'workoutlog/workoutsession_confirm_delete.html'
-    success_url = '/workoutlog/view_sessions/'
+    success_url = reverse_lazy('workoutlog:view_workout_sessions')
 
     def get_queryset(self):
         return WorkoutSession.objects.filter(user=self.request.user)

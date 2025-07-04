@@ -10,43 +10,8 @@
     <form method="post">
         {% csrf_token %}
         {{ form.non_field_errors }}
-        <table>
-            <tr>
-                <th>{{ form.date.label_tag }}</th>
-                <td>{{ form.date }}</td>
-            </tr>
-            <tr>
-                <th>{{ form.pullup_type.label_tag }}</th>
-                <td>{{ form.pullup_type }}</td>
-            </tr>
-            <tr><th colspan="2">Set 1</th></tr>
-            <tr>
-                <th>{{ form.pullup_count1.label_tag }}</th>
-                <td>{{ form.pullup_count1 }}</td>
-            </tr>
-            <tr>
-                <th>{{ form.pushup_count1.label_tag }}</th>
-                <td>{{ form.pushup_count1 }}</td>
-            </tr>
-            <tr><th colspan="2">Set 2</th></tr>
-            <tr>
-                <th>{{ form.pullup_count2.label_tag }}</th>
-                <td>{{ form.pullup_count2 }}</td>
-            </tr>
-            <tr>
-                <th>{{ form.pushup_count2.label_tag }}</th>
-                <td>{{ form.pushup_count2 }}</td>
-            </tr>
-            <tr><th colspan="2">Set 3</th></tr>
-            <tr>
-                <th>{{ form.pullup_count3.label_tag }}</th>
-                <td>{{ form.pullup_count3 }}</td>
-            </tr>
-            <tr>
-                <th>{{ form.pushup_count3.label_tag }}</th>
-                <td>{{ form.pushup_count3 }}</td>
-            </tr>
-        </table>
+        {{ form.errors }}
+        {{ form }}
 
         <button type="submit">Save</button>
     </form>

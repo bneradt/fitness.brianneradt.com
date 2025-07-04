@@ -15,6 +15,10 @@
     <p>Pullup Count (Set 3): {{ session.pullup_count3 }}</p>
     <p>Pushup Count (Set 3): {{ session.pushup_count3 }}</p>
 
+    <!-- add daily totals -->
+    <p>Total Pullups: {{ session.total_pullups }}</p>
+    <p>Total Pushups: {{ session.total_pushups }}</p>
+
     <p><a href="{% url 'workoutlog:edit_workout_session' session.pk %}">Edit</a> | <a href="{% url 'workoutlog:delete_workout_session' session.pk %}">Delete</a></p>
 </body>
 </html>

@@ -23,8 +23,8 @@
             <tr>
                 <td>{{ session.date }}</td>
                 <td>{{ session.get_pullup_type_display }}</td>
-                <td>{{ session.pullup_count }}</td>
-                <td>{{ session.pushup_count }}</td>
+                <td>{{ session.total_pullups }}</td>
+                <td>{{ session.total_pushups }}</td>
                 <td>
                     <a href="{% url 'workoutlog:workout_session_detail' session.pk %}">View</a> |
                     <a href="{% url 'workoutlog:edit_workout_session' session.pk %}">Edit</a> |

@@ -16,13 +16,6 @@ class WorkoutSessionForm(forms.ModelForm):
         ]
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
-            'pullup_type': forms.Select(),
-            'pullup_count1': forms.NumberInput(attrs={'min': 0}),
-            'pushup_count1': forms.NumberInput(attrs={'min': 0}),
-            'pullup_count2': forms.NumberInput(attrs={'min': 0}),
-            'pushup_count2': forms.NumberInput(attrs={'min': 0}),
-            'pullup_count3': forms.NumberInput(attrs={'min': 0}),
-            'pushup_count3': forms.NumberInput(attrs={'min': 0}),
         }
 
     def __init__(self, *args, **kwargs):
