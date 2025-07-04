@@ -3,22 +3,18 @@
 {% block title %}Delete Workout Session{% endblock %}
 
 {% block content %}
-<h1>Delete Workout Session</h1>
-<p>Are you sure you want to delete this workout session?</p>
-
-<p>Date: {{ session.date }}</p>
-<p>Pullup Type: {{ session.get_pullup_type_display }}</p>
-<p>Pullup Count (Set 1): {{ session.pullup_count1 }}</p>
-<p>Pushup Count (Set 1): {{ session.pushup_count1 }}</p>
-<p>Pullup Count (Set 2): {{ session.pullup_count2 }}</p>
-<p>Pushup Count (Set 2): {{ session.pushup_count2 }}</p>
-<p>Pullup Count (Set 3): {{ session.pullup_count3 }}</p>
-<p>Pushup Count (Set 3): {{ session.pushup_count3 }}</p>
-
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Confirm Delete</button>
-</form>
-
-<p><a href="{% url 'workoutlog:view_workout_sessions' %}">Cancel</a></p>
+<div class="card text-white bg-danger mb-3">
+  <div class="card-header">Delete Workout Session</div>
+  <div class="card-body">
+    <h5 class="card-title">Are you sure you want to delete this workout session?</h5>
+    <p class="card-text"><strong>Date:</strong> {{ session.date }}</p>
+    <p class="card-text"><strong>Pullup Type:</strong> {{ session.get_pullup_type_display }}</p>
+    <hr class="bg-light">
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-light">Confirm Delete</button>
+      <a href="{% url 'workoutlog:view_workout_sessions' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
 {% endblock %}

@@ -3,18 +3,25 @@
 {% block title %}Workout Session Detail{% endblock %}
 
 {% block content %}
-    <h1>Workout Session Detail</h1>
-    <p>Date: {{ session.date }}</p>
-    <p>Pullup Type: {{ session.get_pullup_type_display }}</p>
-    <p>Pullup Count (Set 1): {{ session.pullup_count1 }}</p>
-    <p>Pushup Count (Set 1): {{ session.pushup_count1 }}</p>
-    <p>Pullup Count (Set 2): {{ session.pullup_count2 }}</p>
-    <p>Pushup Count (Set 2): {{ session.pushup_count2 }}</p>
-    <p>Pullup Count (Set 3): {{ session.pullup_count3 }}</p>
-    <p>Pushup Count (Set 3): {{ session.pushup_count3 }}</p>
-
-    <p>Total Pullups: {{ session.total_pullups }}</p>
-    <p>Total Pushups: {{ session.total_pushups }}</p>
-
-    <p><a href="{% url 'workoutlog:edit_workout_session' session.pk %}">Edit</a> | <a href="{% url 'workoutlog:delete_workout_session' session.pk %}">Delete</a></p>
+  <div class="card">
+    <div class="card-header">
+      Workout Session Detail
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Date: {{ session.date }}</h5>
+      <p class="card-text">Pullup Type: {{ session.get_pullup_type_display }}</p>
+      <p class="card-text">Pullup Count (Set 1): {{ session.pullup_count1 }}</p>
+      <p class="card-text">Pushup Count (Set 1): {{ session.pushup_count1 }}</p>
+      <p class="card-text">Pullup Count (Set 2): {{ session.pullup_count2 }}</p>
+      <p class="card-text">Pushup Count (Set 2): {{ session.pushup_count2 }}</p>
+      <p class="card-text">Pullup Count (Set 3): {{ session.pullup_count3 }}</p>
+      <p class="card-text">Pushup Count (Set 3): {{ session.pushup_count3 }}</p>
+      <hr>
+      <p class="card-text"><strong>Total Pullups:</strong> {{ session.total_pullups }}</p>
+      <p class="card-text"><strong>Total Pushups:</strong> {{ session.total_pushups }}</p>
+      <a href="{% url 'workoutlog:edit_workout_session' session.pk %}" class="btn btn-warning">Edit</a>
+      <a href="{% url 'workoutlog:delete_workout_session' session.pk %}" class="btn btn-danger">Delete</a>
+      <a href="{% url 'workoutlog:view_workout_sessions' %}" class="btn btn-secondary">Back to list</a>
+    </div>
+  </div>
 {% endblock %}
