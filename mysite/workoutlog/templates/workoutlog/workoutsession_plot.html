@@ -13,10 +13,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const labels = JSON.parse('{{ labels_json|escapejs }}');
-    const pullupsData = JSON.parse('{{ pullups_json|escapejs }}');
-    const chinupsData = JSON.parse('{{ chinups_json|escapejs }}');
-    const neutralData = JSON.parse('{{ neutral_json|escapejs }}');
-    const pushupsData = JSON.parse('{{ pushups_json|escapejs }}');
+    const pullupsData = JSON.parse('{{ pullups_json|escapejs }}').map(v => v === 0 ? null : v);
+    const chinupsData = JSON.parse('{{ chinups_json|escapejs }}').map(v => v === 0 ? null : v);
+    const neutralData = JSON.parse('{{ neutral_json|escapejs }}').map(v => v === 0 ? null : v);
+    const pushupsData = JSON.parse('{{ pushups_json|escapejs }}').map(v => v === 0 ? null : v);
 
     const ctx = document.getElementById('workoutChart').getContext('2d');
     new Chart(ctx, {
@@ -55,6 +55,7 @@
         ]
       },
       options: {
+        spanGaps: true,
         responsive: true,
         interaction: {
           mode: 'index',
