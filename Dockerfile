@@ -30,7 +30,7 @@ FROM python:3.13-slim
 RUN <<EOS
    set -e
 
-   useradd -m -r appuser
+   useradd -m -r -u 1000 appuser
    mkdir /app
    chown -R appuser /app
 EOS
