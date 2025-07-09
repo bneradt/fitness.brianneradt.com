@@ -23,4 +23,5 @@ class WorkoutSessionForm(forms.ModelForm):
         # Default the date field to today if not provided
         if not self.instance.pk and not self.data.get('date'):
             from django.utils import timezone
-            self.fields['date'].initial = timezone.now().date()
+            # Use localdate to respect TIME_ZONE and avoid UTC shift
+            self.fields['date'].initial = timezone.localdate()
