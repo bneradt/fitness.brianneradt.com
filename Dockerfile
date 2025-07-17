@@ -26,7 +26,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Stage 2: Production stage
 FROM python:3.13-slim
-
 RUN <<EOS
    set -e
 
@@ -48,6 +47,22 @@ COPY --chown=appuser:appuser ./mysite /app
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+
+# Optional stage 3: Development stage. Only run if MODE=dev
+ARG MODE=prod
+RUN <<EOS
+   set -e
+   set -x
+
+   if [ "${MODE}" != "dev" ]
+   then
+      echo "Skipping development dependencies installation for production mode."
+      exit 0
+   fi
+
+   apt-get update
+   apt-get install -y git
+EOS
 
 # Switch to non-root user
 USER appuser
