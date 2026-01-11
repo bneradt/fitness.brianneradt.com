@@ -26,6 +26,24 @@ class WorkoutSessionCreateView(LoginRequiredMixin, CreateView):
     form_class = WorkoutSessionForm
     template_name = 'workoutlog/workoutsession_form.html'
 
+    def get_initial(self):
+        initial = super().get_initial()
+        # Query the user's most recent session.
+        last_session = WorkoutSession.objects.filter(
+            user=self.request.user
+        ).order_by('-date').first()
+
+        if last_session:
+            # Compute next in cycle: pullups → chinups → neutral → pullups.
+            cycle = {
+                PullupType.PULLUPS: PullupType.CHINUPS,
+                PullupType.CHINUPS: PullupType.NEUTRAL,
+                PullupType.NEUTRAL: PullupType.PULLUPS,
+            }
+            initial['pullup_type'] = cycle.get(last_session.pullup_type, PullupType.PULLUPS)
+
+        return initial
+
     def get_success_url(self):
         # Trigger celebration on the list page after saving a new workout.
         return reverse_lazy('workoutlog:view_workout_sessions') + '?celebrate=1'
