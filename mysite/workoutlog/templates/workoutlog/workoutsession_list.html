@@ -36,3 +36,49 @@
 </tbody>
 </table>
 {% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>
+(function() {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('celebrate')) return;
+
+    // Clean URL so refresh doesn't re-trigger.
+    window.history.replaceState({}, '', window.location.pathname);
+
+    // Confetti shower from above.
+    function confettiShower() {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.0 },
+            gravity: 1.2
+        });
+    }
+
+    // Firework burst from a given position.
+    function firework(x) {
+        confetti({
+            particleCount: 50,
+            angle: 90,
+            spread: 60,
+            startVelocity: 45,
+            origin: { x: x, y: 1 },
+            colors: ['#ff0', '#f0f', '#0ff', '#ff6600', '#00ff00']
+        });
+    }
+
+    // Celebration sequence.
+    confettiShower();
+    setTimeout(() => firework(0.2), 200);
+    setTimeout(() => firework(0.8), 400);
+    setTimeout(() => confettiShower(), 600);
+    setTimeout(() => {
+        firework(0.3);
+        firework(0.7);
+    }, 800);
+    setTimeout(() => confettiShower(), 1000);
+})();
+</script>
+{% endblock %}

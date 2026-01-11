@@ -25,7 +25,10 @@ class WorkoutSessionCreateView(LoginRequiredMixin, CreateView):
     model = WorkoutSession
     form_class = WorkoutSessionForm
     template_name = 'workoutlog/workoutsession_form.html'
-    success_url = reverse_lazy('workoutlog:view_workout_sessions')
+
+    def get_success_url(self):
+        # Trigger celebration on the list page after saving a new workout.
+        return reverse_lazy('workoutlog:view_workout_sessions') + '?celebrate=1'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
